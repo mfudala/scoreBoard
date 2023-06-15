@@ -9,9 +9,9 @@ public class Game {
     private LocalDateTime startTime;
     private boolean isFinished;
 
-    public Game(final String homeTeam, final String awayTeam) {
-        this.homeTeam = new Team(homeTeam);
-        this.awayTeam = new Team(awayTeam);
+    public Game(final String homeTeamName, final String awayTeamName) {
+        this.homeTeam = new Team(homeTeamName);
+        this.awayTeam = new Team(awayTeamName);
     }
 
     public GameResult getGameResult() {

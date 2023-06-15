@@ -1,8 +1,6 @@
-package com.fudala.mateusz.service;
+package com.fudala.mateusz.scoreboard.service;
 
 import com.fudala.mateusz.scoreboard.model.Game;
-import com.fudala.mateusz.scoreboard.model.Team;
-import com.fudala.mateusz.scoreboard.service.ScoreboardEngine;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -86,9 +84,7 @@ class ScoreboardEngineTest {
     }
 
     private static Game getNewTestGame() {
-        var homeTeam = new Team("Redania");
-        var awayTeam = new Team("Aedirn");
-        return new Game(homeTeam, awayTeam);
+        return new Game("Redania", "Aedirn");
     }
 
 }
