@@ -1,6 +1,7 @@
-package com.fudala.mateusz.scoreboard.service;
+package com.fudala.mateusz.scoreboard.service.validator;
 
 import com.fudala.mateusz.scoreboard.model.Game;
+import com.fudala.mateusz.scoreboard.service.validator.GameStateValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -20,6 +20,10 @@ public class Game {
         return new GameResult(homeTeamScore, awayTeamScore);
     }
 
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
     public void updateGameScore(final GameResult gameResult) {
         homeTeam.setTeamScore(gameResult.getHomeTeamScore());
         awayTeam.setTeamScore(gameResult.getAwayTeamScore());
@@ -42,5 +46,11 @@ public class Game {
 
     public boolean isFinished() {
         return isFinished;
+    }
+
+    @Override
+    public String toString() {
+        return homeTeam.getTeamName() + " " + homeTeam.getTeamScore() + " : " +
+                awayTeam.getTeamName() + " " + awayTeam.getTeamScore();
     }
 }

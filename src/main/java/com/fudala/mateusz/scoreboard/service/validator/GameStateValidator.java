@@ -1,4 +1,4 @@
-package com.fudala.mateusz.scoreboard.service;
+package com.fudala.mateusz.scoreboard.service.validator;
 
 import com.fudala.mateusz.scoreboard.model.Game;
 
