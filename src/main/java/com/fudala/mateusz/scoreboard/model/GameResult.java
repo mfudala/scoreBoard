@@ -1,5 +1,7 @@
 package com.fudala.mateusz.scoreboard.model;
 
+import java.util.Objects;
+
 public class GameResult {
 
     private final int homeTeamScore;
@@ -25,5 +27,27 @@ public class GameResult {
             throw new IllegalArgumentException(String.format(
                     "Score cannot be negative, provided score value: {%d}", teamScore));
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameResult that = (GameResult) o;
+        return homeTeamScore == that.homeTeamScore &&
+                awayTeamScore == that.awayTeamScore;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(homeTeamScore, awayTeamScore);
+    }
+
+    @Override
+    public String toString() {
+        return "GameResult{" +
+                "homeTeamScore=" + homeTeamScore +
+                ", awayTeamScore=" + awayTeamScore +
+                '}';
     }
 }

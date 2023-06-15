@@ -1,6 +1,7 @@
 package com.fudala.mateusz.scoreboard.model;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Game {
 
@@ -14,19 +15,8 @@ public class Game {
         this.awayTeam = new Team(awayTeamName);
     }
 
-    public GameResult getGameResult() {
-        var homeTeamScore = homeTeam.getTeamScore();
-        var awayTeamScore = awayTeam.getTeamScore();
-        return new GameResult(homeTeamScore, awayTeamScore);
-    }
-
     public LocalDateTime getStartTime() {
         return startTime;
-    }
-
-    public void updateGameScore(final GameResult gameResult) {
-        homeTeam.setTeamScore(gameResult.getHomeTeamScore());
-        awayTeam.setTeamScore(gameResult.getAwayTeamScore());
     }
 
     public void startGame() {
@@ -46,6 +36,33 @@ public class Game {
 
     public boolean isFinished() {
         return isFinished;
+    }
+
+    public GameResult getGameResult() {
+        var homeTeamScore = homeTeam.getTeamScore();
+        var awayTeamScore = awayTeam.getTeamScore();
+        return new GameResult(homeTeamScore, awayTeamScore);
+    }
+
+    public void updateGameScore(final GameResult gameResult) {
+        homeTeam.setTeamScore(gameResult.getHomeTeamScore());
+        awayTeam.setTeamScore(gameResult.getAwayTeamScore());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Game game = (Game) o;
+        return isFinished == game.isFinished &&
+                Objects.equals(homeTeam, game.homeTeam) &&
+                Objects.equals(awayTeam, game.awayTeam) &&
+                Objects.equals(startTime, game.startTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(homeTeam, awayTeam, startTime, isFinished);
     }
 
     @Override

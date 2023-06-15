@@ -1,6 +1,7 @@
 package com.fudala.mateusz.scoreboard.service;
 
 import com.fudala.mateusz.scoreboard.model.Game;
+import com.fudala.mateusz.scoreboard.model.GameResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,7 +44,18 @@ class ScoreboardEngineTest {
 
     @Test
     void shouldUpdateScore() {
+        // given
+        var game = getNewTestGame();
+        var homeScore = 1;
+        var awayScore = 0;
+        serviceUnderTest.startNewGame(game);
 
+        // when
+        serviceUnderTest.updateScore(game, new GameResult(homeScore, awayScore));
+
+        // then
+        assertEquals(homeScore, game.getGameResult().getHomeTeamScore());
+        assertEquals(awayScore, game.getGameResult().getAwayTeamScore());
     }
 
     @Test
@@ -63,24 +75,32 @@ class ScoreboardEngineTest {
     }
 
     @Test
-    void shouldThrowAnExceptionWhenFinishingGameThatIsAlreadyCompleted() {
+    void shouldGetSummaryOfGamesSorted() {
         // given
-        var game = getNewTestGame();
-        serviceUnderTest.startNewGame(game);
-        serviceUnderTest.finishGame(game);
+        var mexicoCanada = new Game("Mexico", "Canada");
+        var spainBrazil = new Game("Spain", "Brazil");
+        var germanyFrance = new Game("Germany", "France");
+        var uruguayItaly = new Game("Uruguay", "Italy");
+        var argentinaAustralia = new Game("Argentina", "Australia");
 
-        // when && then
-        assertThrows(IllegalStateException.class, () -> serviceUnderTest.finishGame(game));
-    }
+        serviceUnderTest.startNewGame(mexicoCanada);
+        serviceUnderTest.startNewGame(spainBrazil);
+        serviceUnderTest.startNewGame(germanyFrance);
+        serviceUnderTest.startNewGame(uruguayItaly);
+        serviceUnderTest.startNewGame(argentinaAustralia);
 
-    @Test
-    void shouldGetSummaryOfGamesOrderedByTotalScore() {
+        serviceUnderTest.updateScore(mexicoCanada, new GameResult(0, 5));
+        serviceUnderTest.updateScore(spainBrazil, new GameResult(10, 2));
+        serviceUnderTest.updateScore(germanyFrance, new GameResult(2, 2));
+        serviceUnderTest.updateScore(uruguayItaly, new GameResult(6, 6));
+        serviceUnderTest.updateScore(argentinaAustralia, new GameResult(3, 1));
 
-    }
+        // when
+        var gamesInProgress = serviceUnderTest.getSummaryOfGamesInProgress();
 
-    @Test
-    void shouldGetSummaryOfGamesOrderedStartTimeWhenTotalScoreIsEqual() {
-
+        // then
+        assertThat(gamesInProgress).containsExactly(
+                uruguayItaly, spainBrazil, mexicoCanada, argentinaAustralia, germanyFrance);
     }
 
     private static Game getNewTestGame() {

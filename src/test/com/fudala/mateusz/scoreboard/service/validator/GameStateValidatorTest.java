@@ -1,12 +1,11 @@
 package com.fudala.mateusz.scoreboard.service.validator;
 
 import com.fudala.mateusz.scoreboard.model.Game;
-import com.fudala.mateusz.scoreboard.service.validator.GameStateValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class GameStateValidatorTest {
 
