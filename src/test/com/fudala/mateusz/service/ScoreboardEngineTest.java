@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 class ScoreboardEngineTest {
 
     private ScoreboardEngine serviceUnderTest;
@@ -22,7 +21,7 @@ class ScoreboardEngineTest {
     @Test
     void shouldStartNewGame() {
         // given
-        var game = getNewGame();
+        var game = getNewTestGame();
 
         // when
         serviceUnderTest.startNewGame(game);
@@ -35,14 +34,12 @@ class ScoreboardEngineTest {
     }
 
     @Test
-    void shouldThrowAnExceptionWhenStartingGameInProgess() {
+    void shouldThrowAnExceptionWhenStartingGameInProgress() {
         // given
-        var game = getNewGame();
-
-        // when
+        var game = getNewTestGame();
         serviceUnderTest.startNewGame(game);
 
-        // then
+        // when && then
         assertThrows(IllegalStateException.class, () -> serviceUnderTest.startNewGame(game));
     }
 
@@ -54,15 +51,28 @@ class ScoreboardEngineTest {
     @Test
     void shouldFinishGame() {
         // given
-        var game = getNewGame();
+        var game = getNewTestGame();
         serviceUnderTest.startNewGame(game);
 
         // when
         serviceUnderTest.finishGame(game);
+        var gamesInProgress = serviceUnderTest.getSummaryOfGamesInProgress();
 
         // then
+        assertThat(gamesInProgress).doesNotContain(game);
         assertFalse(game.isInProgress());
         assertTrue(game.isFinished());
+    }
+
+    @Test
+    void shouldThrowAnExceptionWhenFinishingGameThatIsAlreadyCompleted() {
+        // given
+        var game = getNewTestGame();
+        serviceUnderTest.startNewGame(game);
+        serviceUnderTest.finishGame(game);
+
+        // when && then
+        assertThrows(IllegalStateException.class, () -> serviceUnderTest.finishGame(game));
     }
 
     @Test
@@ -75,7 +85,7 @@ class ScoreboardEngineTest {
 
     }
 
-    private static Game getNewGame() {
+    private static Game getNewTestGame() {
         var homeTeam = new Team("Redania");
         var awayTeam = new Team("Aedirn");
         return new Game(homeTeam, awayTeam);

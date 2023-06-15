@@ -1,8 +1,7 @@
 package com.fudala.mateusz.scoreboard.model;
 
-import java.util.Objects;
-
 public class Team {
+
     private final String teamName;
     private Score teamScore;
 
@@ -22,24 +21,4 @@ public class Team {
         return teamScore;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Team team = (Team) o;
-        return Objects.equals(teamName, team.teamName) && Objects.equals(teamScore, team.teamScore);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(teamName, teamScore);
-    }
-
-    @Override
-    public String toString() {
-        return "Team{" +
-                "teamName='" + teamName + '\'' +
-                ", teamScore=" + teamScore +
-                '}';
-    }
 }
